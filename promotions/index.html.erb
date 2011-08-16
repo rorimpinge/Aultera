@@ -1,0 +1,56 @@
+<h1>Listing coupons</h1>
+<p><%= link_to 'New coupon', new_promotion_path %></p>
+
+<table border='1'>
+  <tr valign='top'>
+		<td align='center'>Operations</td>
+  	<td align='center'>Coupon<br />Code</td>
+		<td align='center'>Discount</td>
+		<td align='center'>Order<br />Minimum</td>
+		<td align='center'>Orders<br />Using</td>
+		<td align='center'>Orders<br />SubTotal</td>
+		<td align='center'>Discount<br />Total</td>
+		<td>Active?</td>
+		<td align='center'>Products</td>
+  </tr>
+
+<% today = Date.today
+   for coupon in @promotions
+      sub_total = 0.0
+      coupon.orders.each{|o| sub_total += o.sub_total }
+%>
+  <tr>
+    <td><%= link_to 'Show', coupon %>
+        <%= link_to 'Edit', edit_promotion_path(coupon) %>
+		<%= link_to_unless(coupon.orders.length > 0, (coupon.orders.length > 0 ? 'Used' : 'Destroy'), coupon, :confirm => 'Are you sure?', :method => :delete) %>
+		</td>
+  	<td align='center'><strong><%= h coupon.code %></strong></td>
+		<td align='right'>
+			<%= case coupon.promotion_type 
+            when 'F'
+             number_to_currency(coupon.discount)
+            when 'P'
+             number_to_percentage(coupon.discount * 100, :precision => 2)
+           else
+              "Unknown"
+          end
+      %>
+	  </td>
+		<td align='right'><%= number_to_currency(coupon.minimum) %></td>
+  	<td align='right'><%= h coupon.orders.length %></td>
+  	<td align='right'><%= number_to_currency(sub_total) %></td>
+		<td align='right'><%= number_to_currency(coupon.total_discount_using) %></td>
+		<td align='center'><%= coupon.active? %></td>
+		<td align='<%= (coupon.products.length > 0 ? "left" : "center") %>'><% if coupon.products.length > 0 %>
+		    <ul>
+		    	<% coupon.products.each do |prod| %>
+					<li><%= h prod.name %></li>
+					<% end %>
+		    </ul>
+				<% else %>
+				Any
+				<% end %>
+		</td>
+  </tr>
+<% end %>
+</table>

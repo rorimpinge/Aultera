@@ -1,0 +1,44 @@
+<%= f.error_messages %>
+
+<!--[form:promotion]-->
+<table>
+    <tr>
+        <td align='right' style='font-weight: bold;'><label for="promotion_code">Code</label></td>
+        <td><%= f.text_field(:code, {:title => 'Coupon number or Promotional code text.'}) %></td>
+    </tr>
+    <tr>
+        <td align='right' style='font-weight: bold;'>Discount Type</td>
+        <td>
+        	<label><%= f.radio_button(:promotion_type, 'F') %> Flat number (i.e. 5.00)</label><br />
+					<label><%= f.radio_button(:promotion_type, 'P') %> Percentage (i.e. 0.25 for 25%)</label>
+				</td>
+    </tr>
+    <tr>
+        <td align='right' style='font-weight: bold;'><label for="promotion_code">Discount</label></td>
+        <td><%= f.text_field(:discount, {:title => 'Examples: For Flat discount: 5.00  for Percentage 0.10 for 10%'}) %></td>
+    </tr>
+    <tr>
+        <td align='right' style='font-weight: bold;'><label for="promotion_minimum">Minimum</label></td>
+        <td><%= f.text_field(:minimum, {:title => 'Minimum Order sub_total before promotion kicks in (may be blank)'}) %></td>
+    </tr>
+    <tr>
+        <td align='right' style='font-weight: bold;'><label for="promotion_active">Active?</label></td>
+        <td><%= f.check_box(:active) %></td>
+    </tr>
+    <tr>
+        <td align='right' style='font-weight: bold;'><label for="promotion_active_start">Active Start</label></td>
+        <td><%= f.date_select(:active_start, :start_year => Date.today.year) %></td>
+    </tr>
+    <tr>
+        <td align='right' style='font-weight: bold;'><label for="promotion_active_end">Active End</label></td>
+        <td><%= f.date_select(:active_end, :start_year => Date.today.year) %></td>
+    </tr>
+    <tr>
+        <td align='right' style='font-weight: bold;'><label for="products">Products</label></td>
+        <td><%= select_tag 'products[]', @product_options, { :multiple => true, :size => 4 } %></td>
+    </tr>
+
+</table>
+
+<!--[eoform:promotion]-->
+

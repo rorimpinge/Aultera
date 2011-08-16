@@ -1,0 +1,57 @@
+<h2>Coupon details</h2>
+<table>
+    <tr>
+        <td align='right' style='font-weight: bold;'>Code</td>
+        <td><%= h @promotion.code %><strong></td>
+    </tr>
+    <tr>
+        <td align='right' style='font-weight: bold;'>Discount</td>
+        <td><%= (@promotion.promotion_type == 'F' ? 
+                   number_to_currency(@promotion.discount) :
+                   number_to_percentage(@promotion.discount * 100, :precision => 2)) %><strong></td>
+    </tr>
+		<tr>
+        <td align='right' style='font-weight: bold;'>Order Minimum</td>
+        <td><%= number_to_currency(@promotion.minimum) %><strong></td>
+    </tr>
+    <tr>
+        <td align='right' style='font-weight: bold;'>Type</td>
+        <td><%= (@promotion.promotion_type == 'F' ? 'Flat discount amount' : 'Percentage of Order sub_total') %><strong></td>
+    </tr>
+    <tr>
+        <td align='right' style='font-weight: bold;'>Code</td>
+        <td><%= h @promotion.code %><strong></td>
+    </tr>
+    <tr>
+        <td align='right' style='font-weight: bold;'>Active?</td>
+        <td><%= (@promotion.active > 0 ? 'true' : 'false') %></td>
+    </tr>
+    <tr>
+        <td align='right' style='font-weight: bold;'>Active Start</td>
+        <td><%= h @promotion.active_start.to_s %></td>
+    </tr>
+    <tr>
+        <td align='right' style='font-weight: bold;'>Active End</td>
+        <td><%= h @promotion.active_end.to_s %></td>
+    </tr>
+		<tr>
+			<td align='right' style='font-weight: bold;'>Products</td>
+			<td align='left'>
+				<% if @promotion.products.length > 0 %>
+		    <ul>
+		    	<% @promotion.products.each do |prod| %>
+					<li><%= h prod.name %></li>
+					<% end %>
+		    </ul>
+				<% else %>
+				Any
+				<% end %>
+			</td>
+		</tr>
+    <tr>
+        <td align='right'>
+            <%= link_to 'Edit', :action => 'edit', :id => @promotion %> |
+			<%= link_to 'Back', promotions_path %>
+        </td>
+    </tr>
+</table>
